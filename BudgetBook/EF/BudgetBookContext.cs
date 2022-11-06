@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BudgetBook
 {
-    public class BaseContext : DbContext
+    public sealed class BudgetBookContext : DbContext
     {
-        public BaseContext(string dataBasePath)
+        public BudgetBookContext(string dataBasePath)
         {
             if (string.IsNullOrWhiteSpace(dataBasePath))
             {
@@ -21,10 +21,26 @@ namespace BudgetBook
 
         public string DataBasePath { get; } = string.Empty;
 
+        public DbSet<AccountEntity>? Accounts { get; set; }
+
+        public DbSet<MoneyPoolEntity>? MoneyPools { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<AccountEntity>()
+                .ToTable("Account")
+                .HasKey(a => a.GUID)
+                .HasName("PrimaryKey_GUID");
+
+            modelBuilder.Entity<MoneyPoolEntity>()
+             .ToTable("MoneyPool")
+             .HasKey(a => a.GUID)
+             .HasName("PrimaryKey_GUID");
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(@$"Data Source={DataBasePath};");
         }
-
     }
 }

@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace BudgetBook
 {
-    public sealed class AccountAdapter : BaseAdapter
+    public sealed class MoneyPoolAdapter : BaseAdapter
     {
-        public AccountAdapter(BudgetBookContext context) : base(context)
+        public MoneyPoolAdapter(BudgetBookContext context) : base(context)
         {
 
         }
 
-        public override AccountEntity? Select(string guid)
+        public override MoneyPoolEntity? Select(string guid)
         {
-            return Context?.Accounts?.ToList().FirstOrDefault(account => account.GUID.Equals(guid));
+            return Context?.MoneyPools?.ToList().FirstOrDefault(MoneyPool => MoneyPool.GUID.Equals(guid));
         }
 
-        public List<AccountEntity>? SelectAll()
+        public List<MoneyPoolEntity>? SelectAll()
         {
-            Microsoft.EntityFrameworkCore.DbSet<AccountEntity>? datas = Context?.Accounts;
+            Microsoft.EntityFrameworkCore.DbSet<MoneyPoolEntity>? datas = Context?.MoneyPools;
 
             if (datas != null && datas.Any())
             {
@@ -28,31 +28,36 @@ namespace BudgetBook
             }
             else
             {
-                return new List<AccountEntity>();
+                return new List<MoneyPoolEntity>();
             }
         }
 
-        public bool Insert(AccountEntity accountEntity)
+        public bool Insert(MoneyPoolEntity moneyPoolEntity)
         {
-            if (Context.Accounts == null)
+            if (Context.MoneyPools == null)
             {
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(accountEntity.Name))
+            if (moneyPoolEntity.DateOfBalance != null)
             {
-                throw new ArgumentNullException(nameof(accountEntity.Name));
+                throw new ArgumentNullException(nameof(moneyPoolEntity.DateOfBalance));
+            }
+
+            if (moneyPoolEntity.Account != null)
+            {
+                throw new ArgumentNullException(nameof(moneyPoolEntity.Account));
             }
 
             DateTimeOffset now = DateTimeOffset.Now;
-            accountEntity.Creation = now;
-            accountEntity.LastModified = now;
+            moneyPoolEntity.Creation = now;
+            moneyPoolEntity.LastModified = now;
 
             try
             {
                 Context.Database.BeginTransaction();
 
-                Context.Accounts.Add(accountEntity);
+                Context.MoneyPools.Add(moneyPoolEntity);
                 Context.SaveChanges();
 
                 Context.Database.CommitTransaction();
@@ -66,20 +71,20 @@ namespace BudgetBook
             return true;
         }
 
-        public bool Update(AccountEntity accountEntity)
+        public bool Update(MoneyPoolEntity moneyPoolEntity)
         {
-            if (Context.Accounts == null)
+            if (Context.MoneyPools == null)
             {
                 return false;
             }
 
-            accountEntity.LastModified = DateTime.Now;
+            moneyPoolEntity.LastModified = DateTime.Now;
 
             try
             {
                 Context.Database.BeginTransaction();
 
-                Context.Accounts.Update(accountEntity);
+                Context.MoneyPools.Update(moneyPoolEntity);
                 Context.SaveChanges();
 
                 Context.Database.CommitTransaction();
@@ -92,9 +97,9 @@ namespace BudgetBook
             }
         }
 
-        public bool Delete(AccountEntity accountEntity)
+        public bool Delete(MoneyPoolEntity moneyPoolEntity)
         {
-            if (Context.Accounts == null)
+            if (Context.MoneyPools == null)
             {
                 return false;
             }
@@ -103,7 +108,7 @@ namespace BudgetBook
             {
                 Context.Database.BeginTransaction();
 
-                Context.Accounts.Remove(accountEntity);
+                Context.MoneyPools.Remove(moneyPoolEntity);
                 Context.SaveChanges();
 
                 Context.Database.CommitTransaction();

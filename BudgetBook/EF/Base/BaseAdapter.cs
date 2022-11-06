@@ -8,7 +8,7 @@ namespace BudgetBook
 {
     public class BaseAdapter : IDisposable
     {
-        public BaseAdapter(BaseContext context)
+        public BaseAdapter(BudgetBookContext context)
         {
             Context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -20,7 +20,7 @@ namespace BudgetBook
 
         private bool _disposedValue;
 
-        public BaseContext Context { get; private set; }
+        public BudgetBookContext Context { get; private set; }
 
 
         public void Dispose()

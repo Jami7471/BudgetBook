@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BudgetBook
 {
-    public class AccountEntity : BaseEntity
+    public sealed class AccountEntity : BaseEntity
     {
         public string Name { get; set; } = string.Empty;
 
