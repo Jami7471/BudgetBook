@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BudgetBook.Properties;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -21,7 +22,7 @@ namespace BudgetBook
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            SetCulture();
+            SetCulture(Settings.Default.ApplicationCulture);
 
             // delete the startupuri tag from your app.xaml
             base.OnStartup(e);
