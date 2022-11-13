@@ -8,12 +8,23 @@
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" MinHeight="200" MinWidth="400"
         Title="{x:Static resource:Resources.MainTitle}">
-    <Grid>
+    <Window.InputBindings>
+        <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding CloseCommand, Mode=OneWay}"/>
+    </Window.InputBindings>
+    <Grid>        
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-        </Grid.RowDefinitions>        
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Column="0" Grid.Row="0">
+            <MenuItem Header="{x:Static resource:Resources.File}">
+                <MenuItem InputGestureText="Alt+F4"
+                    Header="{x:Static resource:Resources.Exit}"
+                    Command="{Binding CloseCommand, Mode=OneWay}"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

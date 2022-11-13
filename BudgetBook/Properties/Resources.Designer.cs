@@ -61,6 +61,24 @@ namespace BudgetBook.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beenden.
+        /// </summary>
+        public static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datei.
+        /// </summary>
+        public static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Haushaltsbuch.
         /// </summary>
         public static string MainTitle {
